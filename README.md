@@ -39,7 +39,7 @@ Features:
 Tech Stack:
 
     Frontend: React Native
-    Deployment: Vercel/Netlify
+    Deployment: Android Stuido
 
 Challenges and Solutions:
 
@@ -47,6 +47,5 @@ Challenges and Solutions:
     Dynamic Countdown Timer: Implemented a real-time countdown feature for same-day delivery cutoffs using provider-specific time constraints.
     Responsive UI: Built a responsive UI with intuitive user experience to ensure accessibility across devices.
 
-Demo and Deployment: Check out the live demo of the app here.
 
 This project is designed for scalability and can easily adapt to a larger catalog or increased pincode coverage.
