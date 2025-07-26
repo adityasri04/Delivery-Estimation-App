@@ -1,27 +1,29 @@
-/* Main App Layout */
 .App {
+  text-align: center;
   min-height: 100vh;
   background-color: #f8f9fa;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
 }
 
 /* Header Styles */
 .app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.header-left,
-.header-right {
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  padding: 15px 20px;
+}
+
+.header-left {
+  display: flex;
   gap: 15px;
 }
 
@@ -30,28 +32,44 @@
   text-align: center;
 }
 
-.brand-logo {
-  font-size: 24px;
-  font-weight: 700;
-  color: #6f42c1;
-  margin: 0;
+.header-right {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }
 
-.icon-button {
+.menu-button,
+.search-button,
+.user-button,
+.cart-button {
   background: none;
   border: none;
   font-size: 18px;
-  color: #666;
+  color: #333;
   cursor: pointer;
   padding: 8px;
   border-radius: 50%;
   transition: background-color 0.3s ease;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
 }
 
-.icon-button:hover {
+.menu-button:hover,
+.search-button:hover,
+.user-button:hover,
+.cart-button:hover {
   background-color: #f8f9fa;
-  color: #333;
+}
+
+.brand-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #6f42c1;
+  margin: 0;
+  text-decoration: none;
 }
 
 .cart-button {
@@ -74,62 +92,28 @@
   justify-content: center;
 }
 
-/* Navigation Breadcrumbs */
-.breadcrumb-nav {
-  padding: 15px 20px;
-  background-color: white;
-  border-bottom: 1px solid #e9ecef;
-  font-size: 14px;
-  color: #666;
-}
-
-.breadcrumb {
-  color: #007bff;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.breadcrumb:hover {
-  color: #0056b3;
-  text-decoration: underline;
-}
-
-.breadcrumb-separator {
-  margin: 0 8px;
-  color: #999;
-}
-
 /* Main Content */
 .main-content {
   flex: 1;
-  padding: 0;
+  min-height: calc(100vh - 80px);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .app-header {
+  .header-content {
     padding: 10px 15px;
   }
   
-  .brand-logo {
-    font-size: 20px;
+  .brand-name {
+    font-size: 24px;
   }
   
-  .icon-button {
+  .menu-button,
+  .search-button,
+  .user-button,
+  .cart-button {
     font-size: 16px;
-    padding: 6px;
-  }
-  
-  .breadcrumb-nav {
-    padding: 10px 15px;
-    font-size: 12px;
-  }
-  
-  .header-left,
-  .header-right {
-    gap: 10px;
+    width: 35px;
+    height: 35px;
   }
 }
-
-/* Font Awesome Icons */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
