@@ -19,6 +19,7 @@
     "metro": "^0.80.12",
     "metro-config": "^0.81.0",
     "moment": "^2.30.1",
+    "node-fetch": "^2.7.0",
     "papaparse": "^5.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
