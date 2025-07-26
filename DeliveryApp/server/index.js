@@ -24,12 +24,48 @@ let products = [];
 let pincodes = [];
 let stock = [];
 
+// Enhanced product data with realistic skin care products
+const enhancedProducts = [
+  {
+    'Product ID': '1',
+    'Product Name': 'Sesderma Azelac RU Liposomal Serum',
+    'Price': '2650',
+    'Description': 'Advanced skin brightening serum with Azelaic Acid',
+    'Benefits': ['Lightens Spots', 'Targets Pigmentation', 'Evens Skin Tone'],
+    'Size': '30 ml',
+    'Category': 'Serum',
+    'Rating': '4.73',
+    'Reviews': '139',
+    'InCarts': '951'
+  },
+  {
+    'Product ID': '2',
+    'Product Name': 'The Ordinary Niacinamide 10% + Zinc 1%',
+    'Price': '850',
+    'Description': 'Oil control and blemish treatment serum',
+    'Benefits': ['Controls Oil', 'Reduces Blemishes', 'Minimizes Pores'],
+    'Size': '30 ml',
+    'Category': 'Serum',
+    'Rating': '4.68',
+    'Reviews': '892',
+    'InCarts': '1247'
+  },
+  {
+    'Product ID': '3',
+    'Product Name': 'CeraVe Moisturizing Cream',
+    'Price': '1200',
+    'Description': 'Hydrating face and body moisturizer with ceramides',
+    'Benefits': ['Deep Hydration', 'Strengthens Barrier', 'Non-Comedogenic'],
+    'Size': '50 ml',
+    'Category': 'Moisturizer',
+    'Rating': '4.82',
+    'Reviews': '567',
+    'InCarts': '783'
+  }
+];
+
 const loadCSVData = () => {
   try {
-    // Load products
-    const productsCSV = fs.readFileSync(CSV_PATHS.products, 'utf8');
-    products = Papa.parse(productsCSV, { header: true }).data;
-
     // Load pincodes
     const pincodesCSV = fs.readFileSync(CSV_PATHS.pincodes, 'utf8');
     pincodes = Papa.parse(pincodesCSV, { header: true }).data;
@@ -38,7 +74,10 @@ const loadCSVData = () => {
     const stockCSV = fs.readFileSync(CSV_PATHS.stock, 'utf8');
     stock = Papa.parse(stockCSV, { header: true }).data;
 
-    console.log('CSV data loaded successfully');
+    // Use enhanced products instead of CSV
+    products = enhancedProducts;
+
+    console.log('Enhanced product data loaded successfully');
     console.log(`Products: ${products.length}`);
     console.log(`Pincodes: ${pincodes.length}`);
     console.log(`Stock entries: ${stock.length}`);
@@ -123,7 +162,7 @@ const calculateDeliveryDate = (providerName, regionType) => {
 // Check product stock
 const checkProductStock = (productId) => {
   const stockEntry = stock.find(s => s['Product ID'] === productId.toString());
-  return stockEntry ? stockEntry['Stock Available'] === 'True' : false;
+  return stockEntry ? stockEntry['Stock Available'] === 'True' : true; // Default to true for our products
 };
 
 // API Routes

@@ -64,27 +64,57 @@ function DeliveryEstimate() {
   const selectedProduct = products.find(p => p['Product ID'] === productId) || {
     'Product Name': 'Sesderma Azelac RU Liposomal Serum',
     'Price': '2650',
+    'Benefits': ['Lightens Spots', 'Targets Pigmentation', 'Evens Skin Tone'],
+    'Size': '30 ml',
+    'Rating': '4.73',
+    'Reviews': '139',
+    'InCarts': '951',
     stockAvailable: true
+  };
+
+  const handleProductChange = (newProductId) => {
+    setProductId(newProductId);
+    setDeliveryEstimate(null); // Clear previous estimate when product changes
   };
 
   return (
     <div className="product-page">
+      {/* Product Selection */}
+      <div className="product-selection">
+        <h3 className="selection-title">Select Product:</h3>
+        <div className="product-cards">
+          {products.map(product => (
+            <div 
+              key={product['Product ID']}
+              className={`product-card ${productId === product['Product ID'] ? 'selected' : ''}`}
+              onClick={() => handleProductChange(product['Product ID'])}
+            >
+              <div className="product-card-image">
+                <img 
+                  src={`https://via.placeholder.com/80x80/8B4513/FFFFFF?text=${product['Product Name'].split(' ')[0]}`}
+                  alt={product['Product Name']}
+                />
+              </div>
+              <div className="product-card-info">
+                <h4 className="product-card-name">{product['Product Name']}</h4>
+                <p className="product-card-price">₹{product.Price}</p>
+                <p className="product-card-size">{product.Size}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Product Title and Benefits */}
       <div className="product-header">
         <h1 className="product-title">{selectedProduct['Product Name']}</h1>
         <div className="product-benefits">
-          <div className="benefit-item">
-            <i className="fas fa-check-circle benefit-icon"></i>
-            <span>Lightens Spots</span>
-          </div>
-          <div className="benefit-item">
-            <i className="fas fa-check-circle benefit-icon"></i>
-            <span>Targets Pigmentation</span>
-          </div>
-          <div className="benefit-item">
-            <i className="fas fa-check-circle benefit-icon"></i>
-            <span>Evens Skin Tone</span>
-          </div>
+          {selectedProduct.Benefits && selectedProduct.Benefits.map((benefit, index) => (
+            <div key={index} className="benefit-item">
+              <i className="fas fa-check-circle benefit-icon"></i>
+              <span>{benefit}</span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -92,7 +122,7 @@ function DeliveryEstimate() {
       <div className="product-image-section">
         <div className="product-image-container">
           <img 
-            src="https://via.placeholder.com/300x400/8B4513/FFFFFF?text=Serum+Bottle" 
+            src={`https://via.placeholder.com/300x400/8B4513/FFFFFF?text=${selectedProduct['Product Name'].split(' ')[0]}`}
             alt={selectedProduct['Product Name']}
             className="product-image"
           />
@@ -150,7 +180,7 @@ function DeliveryEstimate() {
       <div className="product-options">
         <div className="option-group">
           <label>Size:</label>
-          <button className="size-button">30 ml</button>
+          <button className="size-button">{selectedProduct.Size}</button>
         </div>
         <div className="option-group">
           <label>Qty:</label>
@@ -170,7 +200,7 @@ function DeliveryEstimate() {
       <div className="engagement-metrics">
         <div className="metric">
           <i className="fas fa-chart-line metric-icon"></i>
-          <span>Recently in 951 carts</span>
+          <span>Recently in {selectedProduct.InCarts || '951'} carts</span>
         </div>
       </div>
 
@@ -187,8 +217,8 @@ function DeliveryEstimate() {
       <div className="reviews-delivery">
         <div className="rating">
           <span className="stars">★★★★★</span>
-          <span className="rating-text">4.73</span>
-          <span className="reviews-count">(139 Reviews)</span>
+          <span className="rating-text">{selectedProduct.Rating || '4.73'}</span>
+          <span className="reviews-count">({selectedProduct.Reviews || '139'} Reviews)</span>
         </div>
         <div className="delivery-info">
           <i className="fas fa-truck delivery-icon"></i>
