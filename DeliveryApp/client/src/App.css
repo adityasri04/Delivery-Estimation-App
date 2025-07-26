@@ -1,23 +1,135 @@
+/* Main App Layout */
 .App {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Header Styles */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-center {
+  flex: 1;
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  padding: 20px;
+.brand-logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #6f42c1;
+  margin: 0;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.icon-button:hover {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.cart-button {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #dc3545;
   color: white;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-main {
-  padding: 20px;
+/* Navigation Breadcrumbs */
+.breadcrumb-nav {
+  padding: 15px 20px;
+  background-color: white;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 14px;
+  color: #666;
 }
 
-input {
-  padding: 10px;
-  margin-right: 10px;
-  width: 300px;
+.breadcrumb {
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-button {
-  padding: 10px;
+.breadcrumb:hover {
+  color: #0056b3;
+  text-decoration: underline;
 }
+
+.breadcrumb-separator {
+  margin: 0 8px;
+  color: #999;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 10px 15px;
+  }
+  
+  .brand-logo {
+    font-size: 20px;
+  }
+  
+  .icon-button {
+    font-size: 16px;
+    padding: 6px;
+  }
+  
+  .breadcrumb-nav {
+    padding: 10px 15px;
+    font-size: 12px;
+  }
+  
+  .header-left,
+  .header-right {
+    gap: 10px;
+  }
+}
+
+/* Font Awesome Icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');

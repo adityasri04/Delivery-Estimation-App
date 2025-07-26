@@ -5,11 +5,12 @@ import './DeliveryEstimate.css';
 
 function DeliveryEstimate() {
   const [pincode, setPincode] = useState('');
-  const [productId, setProductId] = useState('');
+  const [productId, setProductId] = useState('1');
   const [products, setProducts] = useState([]);
   const [deliveryEstimate, setDeliveryEstimate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [quantity, setQuantity] = useState(1);
 
   // Load products on component mount
   useEffect(() => {
@@ -60,77 +61,206 @@ function DeliveryEstimate() {
     }
   };
 
+  const selectedProduct = products.find(p => p['Product ID'] === productId) || {
+    'Product Name': 'Sesderma Azelac RU Liposomal Serum',
+    'Price': '2650',
+    stockAvailable: true
+  };
+
   return (
-    <div className="delivery-estimate">
-      <h2>Delivery Estimation</h2>
-      
-      <div className="form-group">
-        <label htmlFor="product">Select Product (Optional):</label>
-        <select 
-          id="product"
-          value={productId} 
-          onChange={(e) => setProductId(e.target.value)}
-          className="form-control"
-        >
-          <option value="">Choose a product...</option>
-          {products.map(product => (
-            <option key={product['Product ID']} value={product['Product ID']}>
-              {product['Product Name']} - ₹{product.Price} 
-              {product.stockAvailable ? ' (In Stock)' : ' (Out of Stock)'}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="pincode">Enter Pincode:</label>
-        <input
-          id="pincode"
-          type="text"
-          value={pincode}
-          onChange={(e) => setPincode(e.target.value)}
-          placeholder="Enter your pincode"
-          className="form-control"
-          maxLength="6"
-        />
-      </div>
-
-      <button 
-        onClick={getEstimate} 
-        disabled={loading || !pincode}
-        className="estimate-button"
-      >
-        {loading ? 'Getting Estimate...' : 'Get Delivery Estimate'}
-      </button>
-
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
-
-      {deliveryEstimate && (
-        <div className="estimate-result">
-          <h3>Delivery Estimate</h3>
-          <div className="estimate-details">
-            <p><strong>Pincode:</strong> {deliveryEstimate.pincode}</p>
-            <p><strong>Provider:</strong> {deliveryEstimate.provider}</p>
-            <p><strong>TAT:</strong> {deliveryEstimate.tat} days</p>
-            <p><strong>Estimated Delivery Date:</strong> {deliveryEstimate.estimatedDate}</p>
-            {deliveryEstimate.isSameDay && (
-              <p className="same-day-badge">Same Day Delivery Available!</p>
-            )}
-            {deliveryEstimate.countdown && (
-              <p className="countdown">{deliveryEstimate.countdown}</p>
-            )}
-            <p><strong>Stock Status:</strong> 
-              <span className={deliveryEstimate.stockAvailable ? 'in-stock' : 'out-of-stock'}>
-                {deliveryEstimate.stockAvailable ? ' In Stock' : ' Out of Stock'}
-              </span>
-            </p>
+    <div className="product-page">
+      {/* Product Title and Benefits */}
+      <div className="product-header">
+        <h1 className="product-title">{selectedProduct['Product Name']}</h1>
+        <div className="product-benefits">
+          <div className="benefit-item">
+            <i className="fas fa-check-circle benefit-icon"></i>
+            <span>Lightens Spots</span>
+          </div>
+          <div className="benefit-item">
+            <i className="fas fa-check-circle benefit-icon"></i>
+            <span>Targets Pigmentation</span>
+          </div>
+          <div className="benefit-item">
+            <i className="fas fa-check-circle benefit-icon"></i>
+            <span>Evens Skin Tone</span>
           </div>
         </div>
-      )}
+      </div>
+
+      {/* Product Image Section */}
+      <div className="product-image-section">
+        <div className="product-image-container">
+          <img 
+            src="https://via.placeholder.com/300x400/8B4513/FFFFFF?text=Serum+Bottle" 
+            alt={selectedProduct['Product Name']}
+            className="product-image"
+          />
+          <button className="zoom-button">
+            <i className="fas fa-search-plus"></i>
+          </button>
+        </div>
+        <div className="image-navigation">
+          <button className="nav-arrow">
+            <i className="fas fa-chevron-left"></i>
+          </button>
+          <div className="image-dots">
+            <span className="dot active"></span>
+            <span className="dot"></span>
+            <span className="dot"></span>
+            <span className="dot"></span>
+          </div>
+          <button className="nav-arrow">
+            <i className="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+
+      {/* Trust Badges */}
+      <div className="trust-badges">
+        <div className="trust-badge">
+          <i className="fas fa-shield-alt trust-icon purple"></i>
+          <span>101% Original</span>
+        </div>
+        <div className="trust-badge">
+          <i className="fas fa-tag trust-icon red"></i>
+          <span>Lowest Price</span>
+        </div>
+        <div className="trust-badge">
+          <i className="fas fa-truck trust-icon blue"></i>
+          <span>Free Shipping</span>
+        </div>
+      </div>
+
+      {/* Pricing Section */}
+      <div className="pricing-section">
+        <div className="price-info">
+          <div className="price">
+            <span className="currency">MRP ₹</span>
+            <span className="amount">{selectedProduct.Price}</span>
+          </div>
+          <div className="tax-info">(incl. of all taxes)</div>
+        </div>
+        <div className="stock-status">
+          <button className="hurry-button">Hurry, Few Left!</button>
+        </div>
+      </div>
+
+      {/* Product Options */}
+      <div className="product-options">
+        <div className="option-group">
+          <label>Size:</label>
+          <button className="size-button">30 ml</button>
+        </div>
+        <div className="option-group">
+          <label>Qty:</label>
+          <select 
+            value={quantity} 
+            onChange={(e) => setQuantity(parseInt(e.target.value))}
+            className="quantity-select"
+          >
+            {[1,2,3,4,5].map(num => (
+              <option key={num} value={num}>{num}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Engagement Metrics */}
+      <div className="engagement-metrics">
+        <div className="metric">
+          <i className="fas fa-chart-line metric-icon"></i>
+          <span>Recently in 951 carts</span>
+        </div>
+      </div>
+
+      {/* Available Offers */}
+      <div className="offers-section">
+        <h3 className="offers-title">Available offers</h3>
+        <div className="offer-item">
+          <i className="fas fa-medal offer-icon"></i>
+          <span>Get free shipping</span>
+        </div>
+      </div>
+
+      {/* Reviews and Delivery */}
+      <div className="reviews-delivery">
+        <div className="rating">
+          <span className="stars">★★★★★</span>
+          <span className="rating-text">4.73</span>
+          <span className="reviews-count">(139 Reviews)</span>
+        </div>
+        <div className="delivery-info">
+          <i className="fas fa-truck delivery-icon"></i>
+          <span>Get it By Oct. 24</span>
+        </div>
+      </div>
+
+      {/* Delivery Estimation */}
+      <div className="delivery-estimation">
+        <div className="pincode-section">
+          <input
+            type="text"
+            value={pincode}
+            onChange={(e) => setPincode(e.target.value)}
+            placeholder="Enter Pincode"
+            className="pincode-input"
+            maxLength="6"
+          />
+          <button 
+            onClick={getEstimate} 
+            disabled={loading || !pincode}
+            className="check-delivery-button"
+          >
+            {loading ? 'Checking...' : 'Check Delivery'}
+          </button>
+        </div>
+
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
+
+        {deliveryEstimate && (
+          <div className="delivery-result">
+            <div className="delivery-details">
+              <div className="delivery-item">
+                <i className="fas fa-calendar-alt"></i>
+                <span>Estimated Delivery: {deliveryEstimate.estimatedDate}</span>
+              </div>
+              {deliveryEstimate.isSameDay && (
+                <div className="same-day-badge">
+                  <i className="fas fa-bolt"></i>
+                  Same Day Delivery Available!
+                </div>
+              )}
+              {deliveryEstimate.countdown && (
+                <div className="countdown">
+                  <i className="fas fa-clock"></i>
+                  {deliveryEstimate.countdown}
+                </div>
+              )}
+              <div className="provider-info">
+                <span>Provider: {deliveryEstimate.provider}</span>
+                <span>TAT: {deliveryEstimate.tat} days</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Call to Action Buttons */}
+      <div className="action-buttons">
+        <button className="add-to-cart-button">
+          <i className="fas fa-shopping-cart"></i>
+          Add to cart
+        </button>
+        <button className="buy-now-button">
+          <i className="fas fa-bolt"></i>
+          Buy it now
+        </button>
+      </div>
     </div>
   );
 }
